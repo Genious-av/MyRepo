@@ -36,7 +36,7 @@ public class EmployeeEntity {
 	@Column(length=100)
 	private String lastName;
 	
-	@Id
+	
 	private int age;
 	@ManyToOne
 	private CompanyEntity company;
