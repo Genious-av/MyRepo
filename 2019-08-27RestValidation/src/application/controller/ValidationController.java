@@ -25,7 +25,7 @@ import application.entities.Person;
 import application.entities.Point;
 
 @RestController
-@Validated
+
 public class ValidationController {
 	
 	@PostMapping("/body")

@@ -1,0 +1,4 @@
+sasha:12345
+masha:54321
+lena:09876
+ketya:63012

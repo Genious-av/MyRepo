@@ -1,5 +1,6 @@
 package application.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,5 +29,21 @@ public class CarMongoService implements ICarMongoService {
 		
 		carRepo.saveAll(uniqCars);
 		return uniqCars.size();
+	}
+	
+	public List<CarDoc> findCarsByModel(String model){
+		return carRepo.findByModel(model);
+	}
+	
+	public List<CarDoc> findCarsByEngineRange(double engineFrom, double engineTo){
+		return carRepo.findByEngineBetween(engineFrom, engineTo);
+	}
+	
+	public List<CarDoc> findCarsByQuery(double engineFrom, double engineTo){
+		return carRepo.findByQuery(engineFrom, engineTo);
+	}
+	
+	public List<CarDoc> findCarsByDate(LocalDate dateFrom, LocalDate dateTo){
+		return carRepo.findByProductionDateBetween(dateFrom, dateTo);
 	}
 }
