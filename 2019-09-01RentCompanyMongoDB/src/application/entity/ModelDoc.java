@@ -2,6 +2,8 @@ package application.entity;
 
 
 
+import java.util.Set;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -21,6 +23,7 @@ public class ModelDoc {
 	private double rentPrice;
 	private double tankVolume;
 	private boolean removed;
+	private Set<String> carIds;
 	
 	
 	public ModelDoc(ModelDTO modelDTO) {

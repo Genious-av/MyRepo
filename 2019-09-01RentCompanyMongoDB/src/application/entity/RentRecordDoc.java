@@ -10,8 +10,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import application.repo.CarMongoRepo;
 import application.repo.DriverMongoRepo;
+import application.repo.ModelMongoRepo;
+import application.service.CarRentService;
 import dto.CarDTO;
 import dto.DriverDTO;
+import dto.ModelDTO;
 import dto.RentRecordDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,21 +26,13 @@ import lombok.NoArgsConstructor;
 
 @Document(collection="rentrecord")
 public class RentRecordDoc {
-	
-	@Autowired
-	CarMongoRepo carRepo;
-	
-	@Autowired
-	DriverMongoRepo driverRepo;
-	
-	CarDoc carDoc=new CarDoc();
-	DriverDoc driverDoc=new DriverDoc();
-	
-	
+	private static final int MAX_TANK = 100;
+
 	@Id
-	private int id;
-	private String CarVin;
-	private int driverTZ;
+	String id;
+	
+	private String carVin;
+	private int diverTZ;
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private LocalDate rentDate;
 	@JsonFormat(pattern="yyyy-MM-dd")
@@ -46,43 +41,38 @@ public class RentRecordDoc {
 	private int tankPercent;
 	private double totalPrice;
 	
-	//constructor for renting car
-	public RentRecordDoc(int id, String carVin, int driverTZ, LocalDate rentDate, int rentDays, int tankPercent,
-			double totalPrice) {
-		super();
-		this.id = id;
-		this.CarVin = carVin;
-		this.driverTZ = driverTZ;
-		this.rentDate = rentDate;
-		this.rentDays = rentDays;
-		this.tankPercent = tankPercent;
-		this.totalPrice = totalPrice;
+	
+	
+	public RentRecordDoc(RentRecordDTO rrDTO) {
+		this.carVin=rrDTO.getCarVin();
+		this.diverTZ=rrDTO.getDiverTZ();
+		this.rentDate=rrDTO.getRentDate();
+		this.returnDate=rrDTO.getReturnDate();
+		this.rentDays=rrDTO.getRentDays();
+		this.tankPercent=rrDTO.getTankPercent();
+		}
+	
+	public RentRecordDTO getRentRecordDTO() {
+		return new RentRecordDTO(this.carVin, this.diverTZ, this.rentDate, this.returnDate, this.rentDays, this.tankPercent, this.totalPrice);
 	}
 	
-	
-	//constructor for returning car
-	
-	public RentRecordDoc(int id, LocalDate returnDate, int tankPercent) {
+
+
+//constructor for renting car
+	public RentRecordDoc(int id, String carVin, int diverTZ, LocalDate rentDate, int rentDays, int tankPercent) {
 		super();
-		this.id = id;
+		this.carVin = carVin;
+		this.diverTZ = diverTZ;
+		this.rentDate = rentDate;
+		this.rentDays = rentDays;
+		this.tankPercent = MAX_TANK;
+	}
+	public RentRecordDoc(String carVin, LocalDate returnDate, int tankPercent) {
+		super();
+		this.carVin = carVin;
 		this.returnDate = returnDate;
 		this.tankPercent = tankPercent;
 	}
-	
-	public RentRecordDoc (RentRecordDTO rentRecordDTO) {
-		this.CarVin=rentRecordDTO.getCar().getVIN();
-		this.driverTZ=rentRecordDTO.getDriver().getTz();
-		this.rentDate=rentRecordDTO.getRentDate();
-		this.rentDays=rentRecordDTO.getRentDays();
-		this.tankPercent=rentRecordDTO.getTankPercent();
-		this.totalPrice=rentRecordDTO.getTotalPrice();
-	}
-	
-	public RentRecordDTO getRentRecordDTO(RentRecordDoc rentRecordDoc) {
-		return new RentRecordDTO(carDoc.getCarDTO(carRepo.findById(CarVin).orElseGet(null)), driverDoc.getDriverDTO(driverRepo.findById(rentRecordDoc.getDriverTZ()).orElse(null)),
-				rentRecordDoc.getRentDate(), rentRecordDoc.getReturnDate(), rentDays, tankPercent, totalPrice);
-	}
-
 	
 	
 }

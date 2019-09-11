@@ -1,6 +1,11 @@
 package application.entity;
 
 import java.time.LocalDate;
+import java.util.Set;
+
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,10 +26,15 @@ public class DriverDoc {
 
 			
 	@Id
+	@Digits(fraction = 0, integer = 10)
 	private int tz;
+	@Size(min=3,max=5,message="Incorrect name")
 	private String name;
 	@JsonFormat(pattern="yyyy-MM-dd")
+	@PastOrPresent
 	private LocalDate birthDate;
+	
+	Set<RentRecordDoc> rentRecords;
 	
 	public DriverDoc(DriverDTO driverDTO) {
 		this.tz=driverDTO.getTz();
