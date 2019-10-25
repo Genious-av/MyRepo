@@ -1,4 +1,4 @@
-package dto;
+package telran.library.dto;
 
 public enum LibReturnCode {
 OK,BOOK_NOT_EXISTS,BOOK_IN_USE,

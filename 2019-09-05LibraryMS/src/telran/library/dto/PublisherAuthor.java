@@ -1,4 +1,4 @@
-package dto;
+package telran.library.dto;
 
 public class PublisherAuthor {
 	String name;

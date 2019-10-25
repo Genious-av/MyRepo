@@ -1,9 +1,10 @@
-package domain.entities;
+package telran.library.domain.entities;
 
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -33,5 +34,8 @@ public class ReaderEntity {
     LocalDate birthDate;
 
     @OneToMany(mappedBy = "reader")
-    Set<RecordEntity> records;
+    Set<RecordEntity> records = new HashSet<>();
+    
+    
+    
 }

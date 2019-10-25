@@ -1,4 +1,4 @@
-package dto;
+package telran.library.dto;
 import java.time.LocalDate;
 import java.util.*;
 public class Book {
@@ -13,6 +13,8 @@ public class Book {
 	String language;
 	int maxDaysInUse;
 	LocalDate archivingDate;
+	
+	
 	public Book(long isbn, int publishingYear, String publisherName, Set<String> authors, String title,
 			int amountInLibrary, SubjectBook subject, String language, int maxDaysInUse) {
 		super();

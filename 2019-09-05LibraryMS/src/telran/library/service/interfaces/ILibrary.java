@@ -1,15 +1,15 @@
-package service.interfaces;
+package telran.library.service.interfaces;
 
 
 import java.time.LocalDate;
 import java.util.*;
 
-import dto.Book;
-import dto.LibReturnCode;
-import dto.PublisherAuthor;
-import dto.Reader;
-import dto.ReaderBookDelay;
-import dto.Record;
+import telran.library.dto.Book;
+import telran.library.dto.LibReturnCode;
+import telran.library.dto.PublisherAuthor;
+import telran.library.dto.Reader;
+import telran.library.dto.ReaderBookDelay;
+import telran.library.dto.Record;
 public interface ILibrary extends ILogger {
 	LibReturnCode addBookItem ( Book book); 
 	LibReturnCode addBookExemplar(long isbn,  int amount); 
@@ -50,4 +50,6 @@ public interface ILibrary extends ILogger {
 	 List<Book> getDelayedBooksByReader(long readerId );
 	 List<ReaderBookDelay> getReadersDelayingBooks();
 
+	 
+	 int getBookFreeAmount(long isbn);
 }
