@@ -3,7 +3,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>telran.spring</groupId>
 	<artifactId>library.haifa</artifactId>
 	<version>0.0.1</version>
@@ -11,7 +10,6 @@
 
 	<name>pom demo</name>
 	<description>Demo project for Spring Boot</description>
-
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -32,6 +30,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
@@ -42,7 +44,6 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.8</version>
 			<scope>provided</scope>
 		</dependency>
 		<!-- modelmapper -->
@@ -51,68 +52,71 @@
 			<artifactId>modelmapper</artifactId>
 			<version>2.3.5</version>
 		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+		</dependency>
 
-		<dependency>
-		    <groupId>io.springfox</groupId>
-		    <artifactId>springfox-swagger2</artifactId>
-		    <version>2.9.2</version>
-		</dependency> 
 
+	
 		<dependency>
-		    <groupId>io.springfox</groupId>
-		    <artifactId>springfox-swagger-ui</artifactId>
-		    <version>2.9.2</version>
+			<groupId>telran.logging</groupId>
+			<artifactId>CustomLogging1</artifactId>
+			<version>0.0.1</version>
 		</dependency>
-			
-		
-		  <dependency>
-		      <groupId>org.springframework.boot</groupId>
-		      <artifactId>spring-boot-starter-actuator</artifactId>
-		  </dependency>
-		
-		<dependency>
-			    <groupId>org.mongodb</groupId>
-			    <artifactId>mongo-java-driver</artifactId>
-			    <version>3.10.2</version>
+
+
+	<dependency>
+			<groupId>telran.aaa</groupId>
+			<artifactId>customauth-library</artifactId>
+			<version>0.0.1</version>
 		</dependency>
+	
 		
-		
-		<dependency>
-			  		<groupId>telran.aaa</groupId>
-			  		<artifactId>customauth-library</artifactId>
-			  		<version>0.0.1</version>
-		</dependency>
 	</dependencies>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
-		<!-- adding application.property to jar -->
 		<resources>
 			<resource>
-			<directory>.</directory><!-- (.) means this directory -->
-			<includes>
-				<include> application.properties</include>
-			</includes>
+				<directory>.</directory>
+				<includes>
+					<include>application.properties</include>
+
+				</includes>
 			</resource>
 		</resources>
-		
 		<plugins>
-		
-			<plugin>
-		        <groupId>com.heroku.sdk</groupId>
-		        <artifactId>heroku-maven-plugin</artifactId>
-		        <version>2.0.13</version>
-		        <configuration>
-		        <appName>libraryhaifa2019-10-24</appName>
-		        <processTypes>
-		        	<web>java -jar target/library.haifa-0.0.1.jar</web>
-		        	</processTypes>
-		        </configuration>
-		   </plugin>
-		
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+              <groupId>com.heroku.sdk</groupId>
+              <artifactId>heroku-maven-plugin</artifactId>
+              <version>2.0.13</version>
+              <configuration>
+                  <appName>libraryhaifa2019-10-30</appName>
+                  <includeTarget>false</includeTarget>
+                  <includes>
+                      <include>target/${project.build.finalName}.jar</include>
+                  </includes>
+                  <jdkVersion>${java.version}</jdkVersion>
+                  <processTypes>
+                      <web>java $JAVA_OPTS -jar target/${project.build.finalName}.jar</web>
+                  </processTypes>
+              </configuration>
+          </plugin>
 		</plugins>
 	</build>
 

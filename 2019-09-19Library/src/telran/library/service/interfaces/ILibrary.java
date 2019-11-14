@@ -42,5 +42,14 @@ public interface ILibrary extends ILogger {
 	boolean isExistBookInArchive(long isbn);
 	 List<Book> getDelayedBooksByReader(long readerId );
 	 List<ReaderBookDelay> getReadersDelayingBooks();
+	 
+	 List<Reader> getAllReaders();
+	 List<Record> getAlRecords();
+	 List<PublisherAuthor> getAllAuthors();
+	 List<PublisherAuthor> getAllPublishers();
+	 
+	 List<Book> getAllBooks();
+	 
+	 
 
 }

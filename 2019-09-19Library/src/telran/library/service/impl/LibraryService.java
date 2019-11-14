@@ -212,8 +212,11 @@ public class LibraryService implements ILibrary {
 		if (recordRepo.existsByBookAndDateOfReturningIsNullAndReader(book, reader)) {
 			return LibReturnCode.READER_BOOK_NOT_RETURN;
 		}
+		
+		System.out.println(("Date of pickup: "+pickupDate));
 		recordRepo.save(new RecordEntity(pickupDate, book, reader));
 		return LibReturnCode.OK;
+		
 	}
 
 	@Override
@@ -311,6 +314,36 @@ public class LibraryService implements ILibrary {
 	public List<ReaderBookDelay> getReadersDelayingBooks() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Reader> getAllReaders() {
+		List<ReaderEntity> readers=readerRepo.findAll();
+		return readers.stream().map(reader->readerMapper.toDto(reader)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Record> getAlRecords() {
+		List<RecordEntity> records=recordRepo.findAll();
+		return records.stream().map(record->recordMapper.toDto(record)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<PublisherAuthor> getAllAuthors() {
+		List<AuthorEntity> authors=authorRepo.findAll();
+		return authors.stream().map(author->authorMapper.toDto(author)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<PublisherAuthor> getAllPublishers() {
+		List<PublisherEntity> publishers=publisherRepo.findAll();
+		return publishers.stream().map(publisher->publisherMapper.toDto(publisher)).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Book> getAllBooks() {
+		List<BookEntity> books=bookRepo.findAll();
+		return books.stream().map(book->bookMapper.toDto(book)).collect(Collectors.toList());
 	}
 
 }

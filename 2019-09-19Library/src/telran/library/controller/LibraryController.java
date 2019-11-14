@@ -8,6 +8,7 @@ import javax.annotation.PreDestroy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,7 @@ import telran.library.api.*;
 import telran.library.domain.entities.AuthorEntity;
 import telran.library.dto.*;
 import telran.library.service.interfaces.ILibrary;
-
+@CrossOrigin
 @RestController
 public class LibraryController {
     @Autowired
@@ -131,13 +132,14 @@ public class LibraryController {
     }
 
     @PostMapping(value = LibraryApiConstants.PICK_BOOK)
-    public LibReturnCode pickupBook(@RequestBody PickReturnData data){
-        return library.pickupBook(data.isbn, data.id, data.date);
+    public LibReturnCode pickupBook(@RequestBody Record record){
+    	System.out.println(record.getDatePickingUp());
+        return library.pickupBook(record.getIsbn(), record.getReaderId(), record.getDatePickingUp());
     }
 
     @PostMapping(value = LibraryApiConstants.RETURN_BOOK)
     public LibReturnCode returnBook(@RequestBody PickReturnData data) {
-        return library.returnBook(data.isbn, data.id, data.date);
+        return library.returnBook(data.isbn, data.id, data.getDate());
     }
 
     @GetMapping(value = LibraryApiConstants.RECORDS_BOOK)
@@ -158,6 +160,32 @@ public class LibraryController {
     public List<Reader> getMostActiveReaders(@RequestParam("from") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate from,
                                              @RequestParam("to") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate to) {
         return library.getMostActiveReaders(from, to);
+    }
+    
+    
+    @GetMapping(value = LibraryApiConstants.ALL_AUTHORS)
+    public List<PublisherAuthor> getAllAuthors() {
+        return library.getAllAuthors();
+    }
+    
+    @GetMapping(value = LibraryApiConstants.ALL_PUBLISHERS)
+    public List<PublisherAuthor> getAllPublishers() {
+        return library.getAllPublishers();
+    }
+    
+    @GetMapping(value = LibraryApiConstants.ALL_READERS)
+    public List<Reader> getAllReaders() {
+        return library.getAllReaders();
+    }
+    
+    @GetMapping(value = LibraryApiConstants.ALL_BOOKS)
+    public List<Book> getAllBooks() {
+        return library.getAllBooks();
+    }
+    
+    @GetMapping(value = LibraryApiConstants.ALL_RECORDS)
+    public List<Record> getAllRecords() {
+        return library.getAlRecords();
     }
 }
 

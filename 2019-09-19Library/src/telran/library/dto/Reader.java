@@ -69,5 +69,13 @@ public class Reader {
 	public LocalDate getBirthDate() {
 		return birthDate;
 	}
+	@Override
+	public String toString() {
+		return "Reader [id=" + id + ", fullName=" + fullName + ", phone=" + phone + ", email=" + email + ", address="
+				+ address + ", birthDate=" + birthDate + "]";
+	}
 
+	
+	
+	
 }

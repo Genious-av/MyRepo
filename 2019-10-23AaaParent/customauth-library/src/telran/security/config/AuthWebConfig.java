@@ -24,12 +24,13 @@ public class AuthWebConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable();//disable token csrf
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); //never to save authentification session between requests
 		if(authentication.equals("enabled")) {
-			//http.authorizeRequests().anyRequest().authenticated(); 		 //all request should be authentificated
-			http.authorizeRequests().antMatchers(AccountingApiConstants.ADD_ACCOUNT, AccountingApiConstants.DELETE_ACCOUNT).authenticated(); //for this actions any authorised user can perform
-			http.authorizeRequests().antMatchers(AccountingApiConstants.UPDATE_PASSWORD,AccountingApiConstants.REVOKE_PASSWORD,AccountingApiConstants.ACTIVATE_ACCOUNT)
-					.hasRole(Roles.ADMIN.toString());//this actions can perform only admin
-			http.authorizeRequests().antMatchers(AccountingApiConstants.ADD_ROLE,AccountingApiConstants.REMOVE_ROLE).hasAnyRole(Roles.ADMIN.toString(),Roles.SUPERUSER.toString());
-			http.authorizeRequests().antMatchers(AccountingApiConstants.GET_HASH_CODE).permitAll();
+			
+						http.authorizeRequests().anyRequest().authenticated(); 		 //all request should be authentificated
+//			http.authorizeRequests().antMatchers(AccountingApiConstants.ADD_ACCOUNT, AccountingApiConstants.DELETE_ACCOUNT).authenticated(); //for this actions any authorised user can perform
+//			http.authorizeRequests().antMatchers(AccountingApiConstants.UPDATE_PASSWORD,AccountingApiConstants.REVOKE_PASSWORD,AccountingApiConstants.ACTIVATE_ACCOUNT)
+//					.hasRole(Roles.ADMIN.toString());//this actions can perform only admin
+//			http.authorizeRequests().antMatchers(AccountingApiConstants.ADD_ROLE,AccountingApiConstants.REMOVE_ROLE).hasAnyRole(Roles.ADMIN.toString(),Roles.SUPERUSER.toString());
+//			http.authorizeRequests().antMatchers(AccountingApiConstants.GET_HASH_CODE).permitAll();
 		} else {
 			http.authorizeRequests().anyRequest().permitAll();
 		}

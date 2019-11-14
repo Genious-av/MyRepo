@@ -25,5 +25,11 @@ public interface LibraryApiConstants {
     String RECORDS_BOOK = "records/book";
     String RECORDS_READER = "records/reader";
     String ACTIVE_READER = "/readers/active";
+    
+    String ALL_READERS="/readers/all";
+    String ALL_RECORDS="/records/all";
+    String ALL_AUTHORS="/authors/all";
+    String ALL_PUBLISHERS="/publishers/all";
+    String ALL_BOOKS="/book/lost";
 
 }

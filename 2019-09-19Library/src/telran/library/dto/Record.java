@@ -7,7 +7,7 @@ import lombok.Setter;
 public class Record {
 	 long  isbn;
 	 long  readerId;
-	  LocalDate datePickingUp;
+	 LocalDate datePickingUp;
 	LocalDate  dateOfReturning; 
 	 int  daysDelayed;
 	 public Record() {
