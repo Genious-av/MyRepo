@@ -14,12 +14,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
-@Document(collection="log")
+@Document(collection="testassignlog")
 public class ResDoc {
 	@Id
 	LocalDateTime date;
 	String className;
 	String methodName;
+	Object[] request;
 	Long timeResponse;
 	String result;
 	String exception;

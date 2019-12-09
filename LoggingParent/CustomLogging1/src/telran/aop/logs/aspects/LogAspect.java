@@ -25,9 +25,6 @@ public class LogAspect {
 	@Autowired
 	ILoggingService serviceLogging;
 	
-	
-	//@Pointcut(value="execution(* telran.aop.logs.controller.LogsTestController.*(..))")
-	
 	@Pointcut(value="@within(org.springframework.web.bind.annotation.RestController)")
 	private void pointCatController(){
 		
@@ -52,7 +49,7 @@ public class LogAspect {
 			LocalDateTime current=LocalDateTime.now();
 			System.out.printf("date-time: %s; class: %s; method:%s"+ " response time: %d\n",current.toString(), className, methodName, 
 					ChronoUnit.MILLIS.between(start, Instant.now()));
-		serviceLogging.addLog(new ResDoc(dateTime, className, methodName, ChronoUnit.MILLIS.between(start, Instant.now()), res.toString(), null));
+		serviceLogging.addLog(new ResDoc(dateTime, className, methodName, joinPoint.getArgs(), ChronoUnit.MILLIS.between(start, Instant.now()), res.toString(), null));
 			
 		}
 				return res;
@@ -66,13 +63,10 @@ public class LogAspect {
 			
 			String className=joinPoint.getTarget().getClass().getName();
 			String methodName=joinPoint.getSignature().getName();
-			serviceLogging.addLog(new ResDoc(dateTime, className, methodName, ChronoUnit.MILLIS.between(start, Instant.now()), null, ex.getMessage()));
+			serviceLogging.addLog(new ResDoc(dateTime, className, methodName, joinPoint.getArgs(), ChronoUnit.MILLIS.between(start, Instant.now()), null, ex.getMessage()));
 		}
 		
-		@PostConstruct
-		public void getAspect() {
-			System.out.println("Aspect in application context");
-		}
+		
 	
 	
 	
