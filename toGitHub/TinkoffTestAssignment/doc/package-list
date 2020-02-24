@@ -1,0 +1,8 @@
+application.tinkoff
+application.tinkoff.assign.controller
+application.tinkoff.assign.dto
+application.tinkoff.assign.entity
+application.tinkoff.assign.repository
+application.tinkoff.assign.service
+application.tinkoff.config
+application.tinkoff.finder

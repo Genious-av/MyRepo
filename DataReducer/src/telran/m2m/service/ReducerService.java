@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -40,23 +41,25 @@ public class ReducerService {
 		Processor reducer;
 		
 		@StreamListener(Processor.INPUT)
-		void takeSensorData(String sensorStrData) throws JsonParseException, JsonMappingException, IOException {
-					
+		void takeMapperData(String sensorStrData) throws JsonParseException, JsonMappingException, IOException {
+					System.out.println("GET "+ sensorStrData);
 			SensorTransformedData sensor=mapper.readValue(sensorStrData, SensorTransformedData.class);
 			
 			if(keyArch.containsKey(sensor.getSensorId())) {
-				if(keyArch.get(sensor.getSensorId()).getSensorValue().hashCode()!=sensor.getSensorValue().hashCode()) {
+				if(!Arrays.equals(keyArch.get(sensor.getSensorId()).getSensorValue(),sensor.getSensorValue())){
+					System.out.println("Sensor contains, current sensor value is not equals to previous sensor value");
 					SensorReducedData updatedSensorReducedData=new SensorReducedData(sensor.getSensorId(),
 							sensor.getSensorValue(),
 							keyArch.get(sensor.getSensorId()).getSensorValue(),
 							sensor.getTimestamp(),
-							keyArch.get(sensor.getSensorId()).getTimestampPrev(),
+							keyArch.get(sensor.getSensorId()).getTimestamp(),
 							sensor.getSensorType());
-					keyArch.put(updatedSensorReducedData.getSensorId(), updatedSensorReducedData);
-					
+					keyArch.put(sensor.getSensorId(), updatedSensorReducedData);
+					System.out.println("POST "+ updatedSensorReducedData);
 					reducer.output().send(MessageBuilder.withPayload(updatedSensorReducedData).build());
-				}
+			}
 			} else {
+				
 				double[] nullValues=new double[sensor.getSensorValue().length];
 				SensorReducedData newSensorReducedData=new SensorReducedData(sensor.getSensorId(),
 						sensor.getSensorValue(),
@@ -64,8 +67,8 @@ public class ReducerService {
 						sensor.getTimestamp(),
 						0l, 
 						sensor.getSensorType());
-				keyArch.put(newSensorReducedData.getSensorId(), newSensorReducedData);
-				
+				keyArch.put(sensor.getSensorId(), newSensorReducedData);
+				System.out.println("POST "+ newSensorReducedData);
 				reducer.output().send(MessageBuilder.withPayload(newSensorReducedData).build());
 			}
 			
